@@ -1,0 +1,85 @@
+---
+title: "Variability Study Paper - Statistical Methodology"
+author: "Kiegan Rice"
+output: pdf_document
+header-includes:
+   - \usepackage{xcolor}
+---
+
+\newcommand{\hh}[1]{{\color{orange}{#1}}}
+\newcommand{\kr}[1]{{\color{teal}{#1}}}
+\newcommand{\ug}[1]{{\color{purple}{#1}}}
+
+
+# Working Backwards  
+
+## Conclusion  
+
+We have developed an extension of the traditional Gauge R\&R framework that maintains the traditional mixed-effects modeling assumptions and results \kr{structure - still working on a better way to say this - } for spatially dependent measurement data as well as pairwise similarity metric measurement data.  
+
+## New methodology that gets us to that conclusion  
+
+\begin{itemize}
+\item Subsampling spatially dependent data to account for dependence and allow for assumption of independence when modeling  
+\item Accounting for differences across spatial locations by including location interaction with study factors  
+\item Reframing of study factors as paired levels within paired data context  
+\end{itemize}  
+
+
+
+## Underlying methodology to get us to our adaptations  
+
+Traditional three-factor Gauge R\&R Model:  
+  \begin{itemize}
+  \item Parts  
+  \item Operators   
+  \item Devices  
+  \end{itemize}  
+  
+Some fixed, unknown process mean $\mu$, and random effects for each study factor. Also state assumptions (independence, variance components).  
+
+Summary values obtained from random effects modeling results: $\sigma_{repeatability}, \sigma_{reproducibility}$.  
+
+## Background about our data types needed  
+
+Forensic firearms analysis poses the "pairwise" question: did a pair of objects originate from the same source or a different source?  
+
+Data used to complete that comparison: two-dimensional signature data, represents striation patterns engraved by gun barrel.  
+
+Two-dimensional signature data is captured through a microscopic measurement system. Operators and microscopes are varying parts of measurement process.  
+
+There are data processing steps which extract a two-dimensional signature from a three-dimensional data object. Processing steps held constant throughout study.  
+
+How pattern is engraved on each bullet also introduces variability; bullet of origin represents "parts".  
+
+Pairwise similarity structure results in data on $[0,1]$. Measuring reproducibility of similarity scores across bullets, operators and machines using pre-defined algorithm applied to pairs of extracted signature data.  
+
+## Background about Gauge R\&R  
+
+Gauge R\&R framework is typically used to evaluate a measurement system, often used in engineering.  
+
+Uses traditional mixed-effects models. Quantifying the magnitude of random effect variance components is of interest.  
+
+Innovations in microscopy have increased the use of 3D microscopy to capture surface topographies of physical objects.  
+
+Traditional microscopy R\&R uses single measured response value, directly applying traditional R\&R framework. 
+
+Repeatability and reproducibility of the captured \textit{objects} is often more relevant than microscope measurement repeatability of a singular response value. Why? Operator staging differences and their interaction with individual microscopes.  
+
+
+# Resulting Outline  
+
+## Introduction/Background 
+
+Gauge R\&R study framework is used to evaluate a measurement system or measurement process. The goal is to quantify the variability in resulting measurement data when measurements are taken under identical environmental conditions and when environmental conditions are varied.  
+
+Uses traditional mixed-effects models. Quantifying magnitude of random effect variance components is the goal.  
+
+Innovations in microscopy have increased use of 3D microscopy to capture surface topographies of physical objects. R\&R framework is defined for singular measurement values. 
+
+Quantifying repeatability and reproducibility of more complex topographical structures captured in 3D microscopy is of interest. We propose an extended R\&R framework for modeling that maintains the same modeling assumptions and resulting model structure, but accounts for more complex data structures.  
+
+
+
+
+
