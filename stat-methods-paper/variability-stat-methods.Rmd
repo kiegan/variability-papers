@@ -11,6 +11,94 @@ header-includes:
 \newcommand{\ug}[1]{{\color{purple}{#1}}}
 
 
+
+# Resulting Outline  
+
+## Plan for level/focus:  
+
+Focus on adaptations to the model for \textit{spatially dependent} data and \textit{paired similarity score} data.  
+
+Introduce two-dimensional signature data and forensic pairwise framework but only for the purpose of alternative response data structures that are of interest.  
+
+\kr{Focus on a single barrel type to avoid over-complicating forensic perspective and study design?}  
+
+
+
+## Introduction/Background 
+
+Gauge R\&R study framework is used to evaluate a measurement system or measurement process. The goal is to quantify the variability in resulting measurement data when measurements are taken under identical environmental conditions and when environmental conditions are varied.  
+
+Uses traditional mixed-effects models. Quantifying magnitude of random effect variance components is the goal.  
+
+Innovations in microscopy have increased use of 3D microscopy to capture surface topographies of physical objects. R\&R framework is defined for singular measurement values. 
+
+Quantifying repeatability and reproducibility of more complex topographical structures captured in 3D microscopy is of interest. 
+
+We propose an extended R\&R framework for modeling that maintains the same modeling assumptions and resulting model structure, but accounts for more complex data structures.  
+
+This paragraph will talk about forensic firearms analysis and that automated methods have two data structures not typical for R\&R studies. Talk about the pairwise nature of comparison.  
+
+Here I will describe that two-dimensional signature data is captured through a microscopic measurement system. Operators and microscopes are varying parts of measurement process. Processing steps are present to get 2D sig., but are held constant in this case.  
+
+Define bullets as parts we are going to measure. \kr{(We will focus on individual lands rather than a pooled model for this case.)}  
+
+Pairwise similarity structure results in data on $[0,1]$. Measuring reproducibility of similarity scores across bullets, operators and machines using pre-defined algorithm applied to pairs of extracted signature data.  
+
+## Methodology  
+
+Traditional three-factor Gauge R\&R Model:  
+  \begin{itemize}
+  \item Parts  
+  \item Operators   
+  \item Devices  
+  \end{itemize}  
+  
+Some fixed, unknown process mean $\mu$, and random effects for each study factor. Also state assumptions (independence, variance components).  
+
+Summary values obtained from random effects modeling results: $\sigma_{repeatability}, \sigma_{reproducibility}$.  
+
+
+### Model adaptation, dependent data  
+
+Describe dependent data structure of signatures, $(\mathbf{X}, \mathbf{Z})$.  
+
+Here discuss lack of independence assumption and autocorrelation structure of signatures due to striations.  
+
+Here lay out the subsampling approach.  
+
+Next lay out including location interaction with study factors.  
+
+### Model adaptation, pairwise data  
+
+Describe pairwise data structure of similarity scores.  
+
+Here discuss relationship of paired study factors.  
+
+Here discuss structure of same-source scores as opposed to different-source scores.  
+
+Reframing of study factors as paired levels within paired data context
+
+## Data Collected  
+
+Repeated data collected for operators and machines, with 5 repetition rounds.  
+
+Signatures extracted using identical processing steps. Pairwise scores calculated for each pair within the set.   
+
+## Results  
+
+### Signature Results  
+
+### Pairwise Results  
+
+
+## Conclusion  
+
+We have developed an extension of the traditional Gauge R\&R framework that maintains the traditional mixed-effects modeling assumptions and results \kr{structure - still working on a better way to say this - } for spatially dependent measurement data as well as pairwise similarity metric measurement data.  
+
+
+
+\newpage  
+
 # Working Backwards  
 
 ## Conclusion  
@@ -65,21 +153,5 @@ Innovations in microscopy have increased the use of 3D microscopy to capture sur
 Traditional microscopy R\&R uses single measured response value, directly applying traditional R\&R framework. 
 
 Repeatability and reproducibility of the captured \textit{objects} is often more relevant than microscope measurement repeatability of a singular response value. Why? Operator staging differences and their interaction with individual microscopes.  
-
-
-# Resulting Outline  
-
-## Introduction/Background 
-
-Gauge R\&R study framework is used to evaluate a measurement system or measurement process. The goal is to quantify the variability in resulting measurement data when measurements are taken under identical environmental conditions and when environmental conditions are varied.  
-
-Uses traditional mixed-effects models. Quantifying magnitude of random effect variance components is the goal.  
-
-Innovations in microscopy have increased use of 3D microscopy to capture surface topographies of physical objects. R\&R framework is defined for singular measurement values. 
-
-Quantifying repeatability and reproducibility of more complex topographical structures captured in 3D microscopy is of interest. We propose an extended R\&R framework for modeling that maintains the same modeling assumptions and resulting model structure, but accounts for more complex data structures.  
-
-
-
 
 
