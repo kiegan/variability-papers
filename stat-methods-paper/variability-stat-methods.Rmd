@@ -14,13 +14,7 @@ header-includes:
 
 # Resulting Outline  
 
-## Plan for level/focus:  
-
-Focus on adaptations to the model for \textit{spatially dependent} data and \textit{paired similarity score} data.  
-
-Introduce two-dimensional signature data and forensic pairwise framework but only for the purpose of alternative response data structures that are of interest.  
-
-\kr{Focus on a single barrel type to avoid over-complicating forensic perspective and study design?}  
+Gauge R\&R for complex data structures.  
 
 
 
@@ -103,7 +97,7 @@ We have developed an extension of the traditional Gauge R\&R framework that main
 
 ## Conclusion  
 
-We have developed an extension of the traditional Gauge R\&R framework that maintains the traditional mixed-effects modeling assumptions and results \kr{structure - still working on a better way to say this - } for spatially dependent measurement data as well as pairwise similarity metric measurement data.  
+Gauge R\&R framework adapted to complex data types.  
 
 ## New methodology that gets us to that conclusion  
 
@@ -153,5 +147,80 @@ Innovations in microscopy have increased the use of 3D microscopy to capture sur
 Traditional microscopy R\&R uses single measured response value, directly applying traditional R\&R framework. 
 
 Repeatability and reproducibility of the captured \textit{objects} is often more relevant than microscope measurement repeatability of a singular response value. Why? Operator staging differences and their interaction with individual microscopes.  
+
+
+\newpage
+
+# Reframing  
+
+**Central Focus:** Measurement systems, and resulting data, have become more complex as the field of data science has grown. Traditional measurement systems analysis methods, such as Gauge R\&R, work for univariate measurement data.   
+
+## Introduction  
+
+- **Intro to Gauge R\&R**  
+  - Goal of GR\&R is to quantify the repeatability and reproducibility of a measurement system  
+  - Defined for, and typically used for, one-dimensional measurement response.  
+  - Example: length of screw.  
+  - When considering any two objects, we consider the distance between those objects and whether that metric of difference falls within an acceptable range of variability for a system/process/etc. 
+  - Example: difference in length of two screws  
+- **Intro to Data Science/Pipelines**  
+  - Data science has produced more complex data which often captures more than a univariate response measuring an object  
+  - Example: We could consider more aspects than just the length of the screw  
+  - Data science pipelines: collection of complex data, applying actions to that data, goal of some result  
+    - Usually involves more complex data structures  
+    - Need to adapt the definition of distance between two objects, and how we apply statistical models to quantify variability in measurement  
+- **Intro to Our Data**  
+  - We use as a motivating example data produced for automated forensic firearms comparison. 
+  - Firearm barrels engrave striation patterns on fired bullets  
+  - Forensic question: same source or different source?  
+  - In order to answer the forensic question, we need to first measure the objects, and secondly compare the objects using a similarity metric.  
+  - Measurement systems analysis applies in two ways: 
+    - First, to the measurement of the objects themselves (translation of objects into data). 
+    - Secondly, to the "measurement" that is the similarity metric.  
+  - Measuring the object: 3D microscopy and capturing the striation patterns engraved on bullets  
+    - Results in a set of measured values, not a singular measurement.  
+    - Define a distance between two sets of measured values  
+  - Similarity metric between two striation pattern measurements  
+    - Results in a singular response value  
+    - What does a distance between two similarity metrics represent  
+
+## Collected Data  
+
+Not sure if this should go here or after methodology?  
+
+Study factors included to study measurement process: bullets, operators, microscopes.  
+
+
+
+
+
+## Methodology  
+
+- Traditional 3-factor Gauge R\&R model  
+- Signature data as complex data structure  
+  - To quantify variability of measurements in signatures in general resulting from measurement process  
+  - Has a natural structure   
+  - Subsampling to equidistant locations, then model measurement variability at sampled locations  
+  - Present model  
+  - Discuss phased approach?  
+- Pairwise similarity scores  
+  - Nature of response as univariate measurement  
+  - Model aspects are *paired*, so need a new grouping structure for statistical models  
+  - Present model  
+
+
+## Results  
+
+- Window size results? This could go in methodology. To show consistency of results  
+- Signature-level results  
+- Pairwise-level results  
+
+## Conclusions  
+
+- 
+
+
+
+
 
 
