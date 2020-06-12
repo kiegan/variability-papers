@@ -1,7 +1,9 @@
 ---
 title: "Variability Study Paper - Statistical Methodology"
 author: "Kiegan Rice"
-output: pdf_document
+output: 
+  pdf_document: 
+    number_sections: true
 header-includes:
    - \usepackage{xcolor}
 ---
@@ -10,217 +12,125 @@ header-includes:
 \newcommand{\kr}[1]{{\color{teal}{#1}}}
 \newcommand{\ug}[1]{{\color{purple}{#1}}}
 
+# Introduction 
+
+## Intro to Gauge R&R  
+
+- Response measurement type  
+  - Example: measuring length of a screw ($y$)  
+- Utility of Gauge R&R, consider distance between two measured objects  
+  - Example: difference in length between two screws: $y_a - y_b = d$  
+- Traditional model applied is mixed-effects, emphasizes variance components for random effects  
+
+## Intro to complex data structures  
+
+- Explosion of data collection and growing complexity of data structures  
+  - Example: considering multiple measurements on a screw 
+  - Background info: multivariate Gauge R&R approaches (include citations) 
+- Data science leverages complex data structures  
+  - Beginning with complex structure, apply actions to structure to achieve goal: some quantitative result  
+    - *figure*: pipeline sketched out with overview images of data structure at each point  
+  - Point: need to adapt definition of distance between two objects with complex structure and how we apply statistical models to quantify measurement variability  
+
+## Example of a data science pipeline with complex data structures is automated forensic firearms comparison  
+
+- firearm barrels engrave striation patterns on fired bullets  
+- forensic question: same source or different source?  
+- data science approach translates complex striation pattern on surface into measured data  
+- reproducibility of measurement system applied to forensic evidence important to establish (wording needs work)
+
+## End of introduction  
+
+- using forensic firearms analysis as a motivating example  
+- propose approaches to adapting gauge R&R framework to two complex data structures within a data science pipeline  
+
+# Methodology  
+
+\kr{Note: I am torn about the order of these next two sections. Do I formally introduce the R\&R structure and model first, and follow that with our data structures? Or introduce the complex structures in our data science pipeline first (along with data structure), then introduce R\&R framework, then come back to data structure? }
+
+## defining complex data structures in forensic firearms analysis  
+
+- answering the forensic question using data science
+  - first, measure objects  
+  - second, compare two objects using a similarity metric  
+- measurement process 1: translation of physical object to complex data structure  
+  - *figure*: resulting data structure (one signature)  
+  - *details*: data structure in vector notation  
+- measurement process 2: measurement of similarity between paired objects  
+  - *figure*: same-source signatures, different-source signatures  
+  - *details*: data structure, range of similarity scores  
 
 
-# Resulting Outline  
+## Traditional three-factor gauge R\&R model  
 
-Gauge R\&R for complex data structures.  
+- define parts, operators, devices  
+- define model  
+  - $j = 1, \dots, n_{p}$; $k = 1, \dots, n_{o}$; $m = 1, \dots, n_{d}$; $n = 1, \dots, n_{r}$
+  - $y_{jkmn} = \mu + p_{j} + o_{k} + d_{m} + po_{jk} + pd_{jm} + od_{km} + pod_{jkm} + e_{jkmn}$  
+  - fixed, unknown measurement mean $\mu$ and random effects... 
+- model assumptions  
+- model outcomes  
 
+## Reframing three-factor R\&R model for structured signature data  
 
+- structure of peaks and valleys violates assumption of measurement independence  
+- fixed effects structure  
+  - \kr{need to figure out a good way to present this}
+- subsampling  
+  - maintains model assumption of independence   
+  - subsampling indices  
+  - *figure*: autocorrelation   
+  - *figure*: subsampling indices  
+- model and model assumptions  
+  - $y_{ijkmn} = \mu_i + p_{ij} + o_{ik} + d_{im} + po_{ijk} + pd_{ijm} + od_{ikm} + pod_{ijkm} + e_{ijkmn}$  
+  - independent random variables  
+  - variance components  
+- multiple phases  
+  - *figure*: phased approach  
 
-## Introduction/Background 
-
-Gauge R\&R study framework is used to evaluate a measurement system or measurement process. The goal is to quantify the variability in resulting measurement data when measurements are taken under identical environmental conditions and when environmental conditions are varied.  
-
-Uses traditional mixed-effects models. Quantifying magnitude of random effect variance components is the goal.  
-
-Innovations in microscopy have increased use of 3D microscopy to capture surface topographies of physical objects. R\&R framework is defined for singular measurement values. 
-
-Quantifying repeatability and reproducibility of more complex topographical structures captured in 3D microscopy is of interest. 
-
-We propose an extended R\&R framework for modeling that maintains the same modeling assumptions and resulting model structure, but accounts for more complex data structures.  
-
-This paragraph will talk about forensic firearms analysis and that automated methods have two data structures not typical for R\&R studies. Talk about the pairwise nature of comparison.  
-
-Here I will describe that two-dimensional signature data is captured through a microscopic measurement system. Operators and microscopes are varying parts of measurement process. Processing steps are present to get 2D sig., but are held constant in this case.  
-
-Define bullets as parts we are going to measure. \kr{(We will focus on individual lands rather than a pooled model for this case.)}  
-
-Pairwise similarity structure results in data on $[0,1]$. Measuring reproducibility of similarity scores across bullets, operators and machines using pre-defined algorithm applied to pairs of extracted signature data.  
-
-## Methodology  
-
-Traditional three-factor Gauge R\&R Model:  
-  \begin{itemize}
-  \item Parts  
-  \item Operators   
-  \item Devices  
-  \end{itemize}  
   
-Some fixed, unknown process mean $\mu$, and random effects for each study factor. Also state assumptions (independence, variance components).  
 
-Summary values obtained from random effects modeling results: $\sigma_{repeatability}, \sigma_{reproducibility}$.  
+## Reframing three-factor R&R model for paired response data  
 
+- response is univariate measurement  
+- study factors are not single-factor (levels do not map one-to-one to response levels)  
 
-### Model adaptation, dependent data  
 
-Describe dependent data structure of signatures, $(\mathbf{X}, \mathbf{Z})$.  
 
-Here discuss lack of independence assumption and autocorrelation structure of signatures due to striations.  
+# Data Collected  
 
-Here lay out the subsampling approach.  
+\kr{still need to decide on the scope we are presenting here - I think one barrel type, maybe Orange?}  
 
-Next lay out including location interaction with study factors.  
+## Study design  
+- three bullets (parts), two machines, eight operators  
+- three to five repetitions and repetition definition  
+- Total number of resulting signatures  
 
-### Model adaptation, pairwise data  
+## separating out LEAs  
+- six separate LEA patterns results in six individual models, one for each LEA  
+- each barrel-land engraves on three LEAs, one per bullet   
 
-Describe pairwise data structure of similarity scores.  
+# Results  
 
-Here discuss relationship of paired study factors.  
+## LEA signatures  
 
-Here discuss structure of same-source scores as opposed to different-source scores.  
+- results table  
+- summary table with $\sigma_{repeat}, \sigma_{reprod}$? 
+- results figure  
 
-Reframing of study factors as paired levels within paired data context
+## pairwise similarity scores  
 
-## Data Collected  
+- change in data structure changes results structure as well  
+- results table  
+- results figure  
 
-Repeated data collected for operators and machines, with 5 repetition rounds.  
+# Conclusions  
 
-Signatures extracted using identical processing steps. Pairwise scores calculated for each pair within the set.   
-
-## Results  
-
-### Signature Results  
-
-### Pairwise Results  
-
-
-## Conclusion  
-
-We have developed an extension of the traditional Gauge R\&R framework that maintains the traditional mixed-effects modeling assumptions and results \kr{structure - still working on a better way to say this - } for spatially dependent measurement data as well as pairwise similarity metric measurement data.  
-
-
-
-\newpage  
-
-# Working Backwards  
-
-## Conclusion  
-
-Gauge R\&R framework adapted to complex data types.  
-
-## New methodology that gets us to that conclusion  
-
-\begin{itemize}
-\item Subsampling spatially dependent data to account for dependence and allow for assumption of independence when modeling  
-\item Accounting for differences across spatial locations by including location interaction with study factors  
-\item Reframing of study factors as paired levels within paired data context  
-\end{itemize}  
-
-
-
-## Underlying methodology to get us to our adaptations  
-
-Traditional three-factor Gauge R\&R Model:  
-  \begin{itemize}
-  \item Parts  
-  \item Operators   
-  \item Devices  
-  \end{itemize}  
-  
-Some fixed, unknown process mean $\mu$, and random effects for each study factor. Also state assumptions (independence, variance components).  
-
-Summary values obtained from random effects modeling results: $\sigma_{repeatability}, \sigma_{reproducibility}$.  
-
-## Background about our data types needed  
-
-Forensic firearms analysis poses the "pairwise" question: did a pair of objects originate from the same source or a different source?  
-
-Data used to complete that comparison: two-dimensional signature data, represents striation patterns engraved by gun barrel.  
-
-Two-dimensional signature data is captured through a microscopic measurement system. Operators and microscopes are varying parts of measurement process.  
-
-There are data processing steps which extract a two-dimensional signature from a three-dimensional data object. Processing steps held constant throughout study.  
-
-How pattern is engraved on each bullet also introduces variability; bullet of origin represents "parts".  
-
-Pairwise similarity structure results in data on $[0,1]$. Measuring reproducibility of similarity scores across bullets, operators and machines using pre-defined algorithm applied to pairs of extracted signature data.  
-
-## Background about Gauge R\&R  
-
-Gauge R\&R framework is typically used to evaluate a measurement system, often used in engineering.  
-
-Uses traditional mixed-effects models. Quantifying the magnitude of random effect variance components is of interest.  
-
-Innovations in microscopy have increased the use of 3D microscopy to capture surface topographies of physical objects.  
-
-Traditional microscopy R\&R uses single measured response value, directly applying traditional R\&R framework. 
-
-Repeatability and reproducibility of the captured \textit{objects} is often more relevant than microscope measurement repeatability of a singular response value. Why? Operator staging differences and their interaction with individual microscopes.  
-
-
-\newpage
-
-# Reframing  
-
-**Central Focus:** Measurement systems, and resulting data, have become more complex as the field of data science has grown. Traditional measurement systems analysis methods, such as Gauge R\&R, work for univariate measurement data.   
-
-## Introduction  
-
-- **Intro to Gauge R\&R**  
-  - Goal of GR\&R is to quantify the repeatability and reproducibility of a measurement system  
-  - Defined for, and typically used for, one-dimensional measurement response.  
-  - Example: length of screw.  
-  - When considering any two objects, we consider the distance between those objects and whether that metric of difference falls within an acceptable range of variability for a system/process/etc. 
-  - Example: difference in length of two screws  
-- **Intro to Data Science/Pipelines**  
-  - Data science has produced more complex data which often captures more than a univariate response measuring an object  
-  - Example: We could consider more aspects than just the length of the screw  
-  - Data science pipelines: collection of complex data, applying actions to that data, goal of some result  
-    - Usually involves more complex data structures  
-    - Need to adapt the definition of distance between two objects, and how we apply statistical models to quantify variability in measurement  
-- **Intro to Our Data**  
-  - We use as a motivating example data produced for automated forensic firearms comparison. 
-  - Firearm barrels engrave striation patterns on fired bullets  
-  - Forensic question: same source or different source?  
-  - In order to answer the forensic question, we need to first measure the objects, and secondly compare the objects using a similarity metric.  
-  - Measurement systems analysis applies in two ways: 
-    - First, to the measurement of the objects themselves (translation of objects into data). 
-    - Secondly, to the "measurement" that is the similarity metric.  
-  - Measuring the object: 3D microscopy and capturing the striation patterns engraved on bullets  
-    - Results in a set of measured values, not a singular measurement.  
-    - Define a distance between two sets of measured values  
-  - Similarity metric between two striation pattern measurements  
-    - Results in a singular response value  
-    - What does a distance between two similarity metrics represent  
-
-## Collected Data  
-
-Not sure if this should go here or after methodology?  
-
-Study factors included to study measurement process: bullets, operators, microscopes.  
-
-
-
-
-
-## Methodology  
-
-- Traditional 3-factor Gauge R\&R model  
-- Signature data as complex data structure  
-  - To quantify variability of measurements in signatures in general resulting from measurement process  
-  - Has a natural structure   
-  - Subsampling to equidistant locations, then model measurement variability at sampled locations  
-  - Present model  
-  - Discuss phased approach?  
-- Pairwise similarity scores  
-  - Nature of response as univariate measurement  
-  - Model aspects are *paired*, so need a new grouping structure for statistical models  
-  - Present model  
-
-
-## Results  
-
-- Window size results? This could go in methodology. To show consistency of results  
-- Signature-level results  
-- Pairwise-level results  
-
-## Conclusions  
-
-- 
-
-
-
+- operator effect shows most when we have bullets with damage  
+  - without maintaining the data format, units (i.e. not using Fourier analysis) we wouldn't have this interpretability  
+- preserve model assumptions and structure 
+- estimate things relevant to data we are working with  
+- can get actionable items for a process  
 
 
 
