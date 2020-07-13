@@ -24,7 +24,9 @@ library(lme4)
 
 ## Intro to Gauge R&R  
 
-Gauge Repeatability and Reproducibility (Gauge R\&R) studies are traditionally used in engineering fields as part of measurement systems analysis. Gauge R\&R studies focus on measuring the repeatability and reproducibility of a measurement process within and across environmental conditions. Their study design assumes a univariate measurement value resulting from some measurement process, and aims to quantify sources of variability around a single measurement average.  
+Gauge Repeatability and Reproducibility (Gauge R\&R) studies are traditionally used in engineering fields as part of measurement systems analysis. Gauge R\&R studies focus on measuring the repeatability and reproducibility of a measurement process within and across environmental conditions \citep{Vardeman}. Their study design assumes a univariate measurement value resulting from some measurement process, and aims to quantify sources of variability around a single measurement average.  
+
+As data collection and analysis become more complex, the Gauge R\&R framework must be adapted to allow for a wider definition of measurement data. We focus on adapting the traditional Gauge R\&R framework to complex data structures. In the following, we describe the complex nature of modern measurement data and methods for adapting the Gauge R\&R framework to quantify measurement repeatability and reproducibility.  
 
 Consider the length of a manufactured screw, $y$. If the length of that screw $y$ is measured by multiple operators using multiple tools, a Gauge R\&R model can be used to determine to what degree the variability in the set of resulting measurements can be attributed to differences across operators or tools.  
 
@@ -38,11 +40,15 @@ The length of the screw in our example is a univariate response measurement. Com
 
 The birth of data science and significant improvements in computing power have opened up new avenues in measurement systems analysis. Data collection and analyses are much quicker and easier today than ever before. Data collected to analyze measurement systems can include more information and take on more complex structures.  
 
-Consider our example of screw length. We can gather additional characteristics of the screw, such as width of the head, length of threading, or depth of the drive. The problem of comparing the set of screw characteristics measured on any two manufactured screws and determining whether they are sufficiently similar is more difficult.  
+Consider our example of screw length. We may want to measure multiple characteristics of that screw to more completely capture the object as a whole. To get a sense for whether any two objects are truly similar we need more than just a singular measurement. The problem of comparing the set of screw characteristics measured on any two manufactured screws and determining whether they are sufficiently similar is more difficult.  
 
-The same idea applies in the field of data science, which often leverages complex data structures. Data science often deals in "pipelines" that begin with complex data structures, apply sequential actions to the data to extract useful information, and achieve some quantitative result. In many applications, the pipeline involves data captured using some measurement system, and there is measurement uncertainty associated with the resulting data.  
+The field of data science often leverages complex data structures. Data science deals in "pipelines" that begin with complex data structures, apply sequential actions such as data processing and data transformation to the data to extract useful information, and achieve some quantitative result. In many applications, the pipeline involves data captured using some measurement system, and there is measurement uncertainty associated with the resulting data.  
 
 In order to leverage complex data structures while taking measurement reproducibility into account, we must adapt the definition of distance between any two objects with complex structure, and carefully consider how we apply statistical models to quantify measurement variability.  
+
+There have been several approaches which apply Gauge R\&R models to multivariate data. \cite{Sweeney} considers two-dimensional response data and accounts for the correlation between the two responses of interest when estimating variance components. \cite{Peruchi} proposes a weighted principal components (WPC) approach to multivariate Gauge R\&R and compares it with estimates found using MANOVA and traditional principal components analysis (PCA). WPC, MANOVA, and PCA are all applied to data with either four- or five-dimensional response measurements which each represent a different characteristic of an object of interest.  
+
+We consider complex data structures with much higher dimensionality, and a structure which inherently differs from those of the responses considered by \cite{Sweeney} and \cite{Peruchi}. As such, we must consider a different modeling approach.   
 
   
 
@@ -232,7 +238,7 @@ The structure of this paper is as follows: we first describe the general three-f
 
 ## Traditional three-factor gauge R\&R model  
 
-The traditional three-factor gauge R\&R model is defined as follows. For parts $j = 1, \dots, n_{p}$, operators $k = 1, \dots, n_{o}$, devices $m = 1, \dots, n_{d}$, and repetitions $n = 1, \dots, n_{r}$, let $y_{jkmn}$ be the measured response value for part $j$, operator $k$, device $m$, and repetition $n$. Define a mixed-effects model, 
+The traditional three-factor gauge R\&R model is defined as follows. For parts $p_j: j = 1, \dots, n_{p}$, operators $o_k: o = 1, \dots, n_{o}$, devices $d_m: m = 1, \dots, n_{d}$, and repetitions $r_n: n = 1, \dots, n_{r}$, let $y_{jkmn}$ be the measured response value for part $j$, operator $k$, device $m$, and repetition $n$. Define a mixed-effects model, 
 
 \begin{equation}
 y_{jkmn} = \mu + p_{j} + o_{k} + d_{m} + po_{jk} + pd_{jm} + od_{km} + pod_{jkm} + e_{jkmn}, \label{model1}
@@ -366,14 +372,24 @@ To uphold the traditional model structure and satisfy the independence assumptio
 (x_i, z_i): i = 1, 1 + w, 1 + 2w, \dots, 1 + cw \label{subsample-indices}
 \end{equation}
 
-where $w \in \mathbb{N}$ is some subsampling window size, with positive integer $c$ such that $1 + cw < \ell$, where $\ell$ is the maximum index $i$ for $x_i$ locations for signatures from land $L$. The necessary window between sampling locations, $w$, will differ based on application and data structure. Here, we propose a window of $w=100$ based on the autocorrelation functions (ACFs) of signature data, which are depicted in \autoref{acfs}.  
+where $w \in \mathbb{N}$ is some subsampling window size, with positive integer $c$ such that $1 + cw < \ell$, where $\ell$ is the maximum index $i$ for $x_i$ locations for signatures from land $L$. The necessary window between sampling locations, $w$, will differ based on application and data structure. Here, we propose a window of $w=100$ based on the autocorrelation functions (ACFs) of signature data, which are depicted in \autoref{acfs}. Signature data structure is not a traditional dependence data structure, such as time series or spatial data, with monotonic decrease of dependence with increase in lag.  
 
-```{r acfs, echo = F, warning = F, message = F, fig.cap = "\\label{acfs}Autocorrelation functions (ACFs) for each repeated signature of Barrel 6, Land 2, shown for lags 0 to 200. One exemplar ACF is shown in green in the foreground. Autocorrelation is greatly reduced for the signature structure by lag 100, which supports a subsampling scheme which samples every $100^{th}$ $x_i$ location.", fig.width = 8, fig.height = 4}
+```{r acfs, echo = F, warning = F, message = F, fig.cap = "\\label{acfs}Autocorrelation functions (ACFs) for each repeated signature of Barrel 6, Land 2, shown for lags 0 to 1000. One exemplar ACF is shown in green in the foreground. Autocorrelation drops of significantly for the signature structure by lag 100, in this example here crossing zero near lag 150. When considering all six lands in the barrel, the ACF is typically low by lag 100.", fig.width = 8, fig.height = 4}
 
+# tst_resid_acfs <- sigs_centered %>%
+#   group_by(scan_id) %>%
+#   nest(data = c(sigs, x, sig1, sig2, x_aligned, mean_by_x, 
+#     resid_by_x)) %>%
+#   mutate(acf_resids = purrr::map(data, .f = function(data){
+#     acf_obj <- acf(data$resid_by_x, lag.max = 500, type = "correlation", na.action = na.pass, plot = FALSE)
+#     data.frame(lag = acf_obj$lag[,,1], acf = acf_obj$acf[,,1])
+#   })) %>%
+#   ungroup()
+  
 sigs_acf <- sigs_aligned %>%
   select(scan_id, unique_id, barrel, bullet, operator_code, machine, round, land, sigs) %>%
   mutate(acf = purrr::map(sigs, .f = function(sigs){
-    acf_obj <- acf(sigs$sig, lag.max = 200, type = "correlation", na.action = na.pass, plot = FALSE)
+    acf_obj <- acf(sigs$sig, lag.max = 1000, type = "correlation", na.action = na.pass, plot = FALSE)
     data.frame(lag = acf_obj$lag[,,1], acf = acf_obj$acf[,,1])
   }))
 
@@ -382,7 +398,14 @@ single_acf <- sigs_acf %>%
          machine == "Sneox1", barrel == "Barrel Orange", 
          bullet == "Bullet 1", land == "Land 2") %>%
   unnest(acf) %>% 
-  filter(row_number() %% 4 == 1)
+  filter(row_number() %% 8 == 1)
+
+# single_acf_resids <- tst_resid_acfs %>%
+#   filter(operator_code == "Operator A", round == "Round 1",
+#          machine == "Sneox1", barrel == "Barrel Orange", 
+#          bullet == "Bullet 1", land == "Land 2") %>%
+#   unnest(acf_resids) %>% 
+#   filter(row_number() %% 8 == 1)
 
 
 sigs_acf %>%
@@ -397,7 +420,30 @@ sigs_acf %>%
   geom_point(aes(x = lag, y = acf), fill = "white", color = "darkgreen", pch = 21, data = single_acf) + 
   labs(x = "Lag Value", y = "ACF Value",title = "Hamby Set 224 Barrel 6, Land 2",
        subtitle = "ACF functions of repeated signatures") +
-  theme(legend.position = 'none', plot.subtitle = element_text(face = "italic"))
+  theme(legend.position = 'none', plot.subtitle = element_text(face = "italic")) + 
+  geom_hline(aes(yintercept = -1.96/sqrt(3000)), lty = 2, color = "royalblue") + 
+  geom_hline(aes(yintercept = 1.96/sqrt(3000)), lty = 2, color = "royalblue") #+ 
+  #geom_line(aes(x = x_aligned, y = (sig2/10) -1), 
+  #          color = "black",
+  #          data = single_sig_line) + 
+  #geom_line(aes(x = x_aligned +1000, y = (sig2/10) - 1), 
+  #          color = "darkgreen", 
+  #          data = single_sig_line %>% filter(between(x_aligned, 0, 2000)))
+
+# tst_resid_acfs %>%
+#   filter(unique_id == "BL O-2") %>%
+#   unnest(acf_resids) %>%
+#   ggplot() +
+#   geom_hline(yintercept = 0, color = "grey60") +
+#   geom_line(aes(x = lag, y = acf, group = scan_id), colour = "grey60", alpha = 0.5) +
+#   geom_vline(xintercept = 100, color = "black", linetype = 4) +
+#   theme_bw() +
+#   geom_segment(aes(x = lag, xend = lag, y = 0, yend = acf), color = "darkgreen", lwd = 1.2, data = single_acf_resids) + 
+#   geom_point(aes(x = lag, y = acf), fill = "white", color = "darkgreen", pch = 21, data = single_acf_resids) + 
+#   labs(x = "Lag Value", y = "ACF Value",title = "Hamby Set 224 Barrel 6, Land 2",
+#        subtitle = "ACF functions of repeated signatures") +
+#   theme(legend.position = 'none', plot.subtitle = element_text(face = "italic"))
+
 
 ```
 
@@ -426,9 +472,7 @@ The structure of pairwise similarity scores presents an obstacle to the Gauge R\
 
 We first consider the problem of paired study factors. When any two pairs of measured LEA signatures are compared, the signatures may have been collected under two differing sets of environmental conditions. For example, two same-source LEA signatures may have been scanned on the same machine, but by different operators. When considering the response value, $z$, we must carefully consider how we index the environmental conditions.  
 
-\kr{I have been battling with this paragraph and how best to write it. I will come back and work on this: This first requires defining the variance components of interest. Here I will talk about what we want to estimate with our variance components. We want to estimate variability in pairwise scores originating from differences in operators, differences in devices, etc. An effective grouping structure to estimate this piece of variability is to consider each unique pairing its own group. Operator A-Operator B, Device 1-Device 2, etc. In some cases, this grouping indicates the environmental condition is held constant (e.g. Operator A-Operator A), but other aspects of that pairing may differ. This gives us the closest parallel to traditional R\&R interpretation: all possible "pairs" of environmental conditions are represented as groups, and we want to estimate how variable scores are across those groupings (i.e., how much of paired score variability can be attributed to differences in that study factor pairing?)}  
-
-The primary research question of interest is 
+The primary values of interest are variance components associated with differing environmental conditions. In order to determine whether the pairwise measurement process is reproducible across measurement conditions, we investigate variability of pairwise scores resulting from scans in a variety of environmental conditions. To capture this mechanism, we consider each possible pair of environmental conditions as a grouping. For example, instead of considering whether the object was measured by Operator A, B, or C, we consider the pair of operators represented in the pairwise score: Operator A and Operator A (A-A), Operator A and Operator B (A-B), Operator A and Operator C (A-C), et cetera. This grouping structure provides the closest parallel to traditional R\&R grouping structure: all pairs of environmental conditions are represented as groups, and we measure variability of resulting scores across those groups. We can then estimate how much of the variability in pairwise scores can be attributed to differences in grouping of operators.  
 
 We re-index our response data in the following way. Let $z_{(L)(j)(k)(m)(n)}$ be the pairwise similarity score resulting from Measurement Process 2 for land pairing $(L): 1-1, 1-2, \dots, 6-6$, part pairing $(j): 1-1, 1-2 \dots, 3-3$, operator pairing $(k): A-A, A-B, \dots, G-H, H-H$, device pairing $(m): 1-1, 1-2, 2-2$, and repetition pairing $(n): 1-1, \dots, 5-5$. 
 
@@ -436,7 +480,7 @@ We re-index our response data in the following way. Let $z_{(L)(j)(k)(m)(n)}$ be
 The second major adaptation we make to the Gauge R\&R framework redefines the fixed effects. When considering pairwise scores from pairs of lands, $(L): 1-1, 1-2, \dots, 6-6$, we must account for the nature of the similarity metric. As shown in \autoref{fig:pipeline-summary}, similarity scores for matching pairs fall within a small spread towards the top of the range, while non-matching pairs have a much more diffuse distribution which falls to the middle and lower end of the range. We expect matched pairings $(1-1, 2-2, \dots, 6-6)$ to have similar mean structures; however, we do not expect the same property of the non-matching pairings. Non-matching pairs are not necessarily different \textit{in the same way}. That is, scores for the pairing $1-2$ may be very low and close to 0.1, whereas scores for the pairing $1-4$ may be higher and fall near 0.4. For this reason, we consider the land-to-land pairing index to be a critical component of the fixed effects structure. We expect scores for each land-to-land pairing to vary around a common mean $\mu_{(L)}$, and aim to measure that variability.  
 
 
-\kr{This paragraph needs some work still:} The spread of scores also differs by land pairing: non-matching land pairs have more diffuse distributions, and some land-to-land pairs may have more or less diffuse score distributions than others by nature. To account for these distributional differences, we also interact land pairing index with our random effect grouping structures to ensure we fully capture variability due to environmental conditions. The resulting model for pairwise scores is then:  
+The spread of scores also differs by land pairing: non-matching land pairs have more diffuse distributions, and some land-to-land pairs may have more or less diffuse score distributions than others by nature. To account for these distributional differences, we also interact land pairing index with our random effect grouping structures to ensure we fully capture variability due to environmental conditions. The resulting model for pairwise scores is then:  
 
 \begin{align}
 z_{(L)(j)(k)(m)(n)} & = \mu_{(L)} + p_{(L)(j)} + o_{(L)(k)} + d_{(L)(m)} + po_{(L)(j)(k)} + pd_{(L)(j)(m)} + od_{(L)(k)(m)} \nonumber \\
