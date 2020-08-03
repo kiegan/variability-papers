@@ -1,0 +1,49 @@
+grp,sdcor,model,barrel,tank_rash
+Bullet-Operator-Machine,0.0039,All,Orange,included
+Bullet-Operator,0.02908,All,Orange,included
+Operator-Machine,0.01271,All,Orange,included
+Operator,0.01726,All,Orange,included
+Bullet-Machine,0.00968,All,Orange,included
+Bullet,0.11736,All,Orange,included
+Machine,0.01081,All,Orange,included
+Residual,0.1148,All,Orange,included
+Bullet-Operator-Machine,0.00288,Same Source,Orange,included
+Bullet-Operator,0.04981,Same Source,Orange,included
+Operator-Machine,0.02229,Same Source,Orange,included
+Operator,0.02712,Same Source,Orange,included
+Bullet-Machine,0.01313,Same Source,Orange,included
+Bullet,0.21254,Same Source,Orange,included
+Machine,0.02003,Same Source,Orange,included
+Residual,0.15928,Same Source,Orange,included
+Bullet-Operator-Machine,0.00344,Different Source,Orange,included
+Bullet-Operator,0.01576,Different Source,Orange,included
+Operator-Machine,0.00722,Different Source,Orange,included
+Operator,0.01081,Different Source,Orange,included
+Bullet-Machine,0.00787,Different Source,Orange,included
+Bullet,0.03465,Different Source,Orange,included
+Machine,0.00293,Different Source,Orange,included
+Residual,0.10366,Different Source,Orange,included
+Bullet-Operator-Machine,0.00272,All,Orange,filtered
+Bullet-Operator,0.02551,All,Orange,filtered
+Operator-Machine,0.01493,All,Orange,filtered
+Operator,0.01773,All,Orange,filtered
+Bullet-Machine,0.00834,All,Orange,filtered
+Bullet,0.04585,All,Orange,filtered
+Machine,0.01158,All,Orange,filtered
+Residual,0.10304,All,Orange,filtered
+Bullet-Operator-Machine,0,Same Source,Orange,filtered
+Bullet-Operator,0.04174,Same Source,Orange,filtered
+Operator-Machine,0.02926,Same Source,Orange,filtered
+Operator,0.03004,Same Source,Orange,filtered
+Bullet-Machine,0.00937,Same Source,Orange,filtered
+Bullet,0.06692,Same Source,Orange,filtered
+Machine,0.02284,Same Source,Orange,filtered
+Residual,0.15498,Same Source,Orange,filtered
+Bullet-Operator-Machine,0.0053,Different Source,Orange,filtered
+Bullet-Operator,0.01505,Different Source,Orange,filtered
+Operator-Machine,0.00562,Different Source,Orange,filtered
+Operator,0.00939,Different Source,Orange,filtered
+Bullet-Machine,0.00766,Different Source,Orange,filtered
+Bullet,0.03432,Different Source,Orange,filtered
+Machine,0,Different Source,Orange,filtered
+Residual,0.08711,Different Source,Orange,filtered
