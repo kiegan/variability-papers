@@ -247,7 +247,7 @@ The traditional three-factor gauge R\&R model is defined as follows. For parts $
 y_{jkmn} = \mu + p_{j} + o_{k} + d_{m} + po_{jk} + pd_{jm} + od_{km} + pod_{jkm} + \epsilon_{jkmn}, \label{model1}
 \end{equation}
 
-where $\mu$ is a fixed, unknown measurement mean and all other model components are random effects \cite{Montgomery}. Assume each $p_j$, $o_k$, $d_m$, $po_{jk}$, $pd_{jm}$, $od_{km}$, and $pod_{jkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero, but with respective different variances; for example, $p_j \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. We also assume $\epsilon_{jkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
+where $\mu$ is a fixed, unknown measurement mean and all other model components are random effects \citep{Montgomery}. Assume each $p_j$, $o_k$, $d_m$, $po_{jk}$, $pd_{jm}$, $od_{km}$, and $pod_{jkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero, but with respective different variances; for example, $p_j \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. We also assume $\epsilon_{jkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
 
 The model estimates of primary importance in measurement systems analysis are the variance components associated with each random effect. For example, the estimated value of $\sigma^2_d$, $\hat{\sigma}^2_d$, estimates the variance in the measurement process associated with differences across measurement devices. In addition, we consider two summary values:  
 
