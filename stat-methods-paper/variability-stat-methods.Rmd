@@ -25,6 +25,8 @@ library(lme4)
 \doublespacing
 
 \kr{The title is a work in progress. Don't love it yet.}
+\hh{I like the title}
+
 \tableofcontents
 
 # Introduction 
@@ -45,7 +47,7 @@ The length of the screw in our example is a univariate response measurement. Qua
 
 The birth of data science and significant improvements in computing power have opened up new avenues in measurement systems analysis. Data collection and analyses are much quicker and easier today than ever before. Measurement systems can collect data in greater detail, often taking on complex forms with unique structures.  
 
-Consider our example of screw length. We may want to measure multiple characteristics of that screw to more completely capture the object as a whole. To get a sense of whether any two screws are truly similar, we can compare more than just a singular characteristic. The problem of comparing the set of screw characteristics measured on any two manufactured screws to determine whether they are sufficiently similar is then more difficult. Screws are a simple traditional example which naturally applies in engineering fields. However, there are many non-traditional data forms which can be captured using measurement systems, due in part to the growth of data science, a field which often leverages complex data structures.  
+Consider our example of screw length. We may want to measure multiple characteristics of that screw to more completely capture the object as a whole. To get a sense of whether any two screws are genuinely similar, we can compare more than just a singular characteristic. The problem of comparing the set of screw characteristics measured on any two manufactured screws to determine whether they are sufficiently similar is then more difficult. Screws are a simple traditional example which naturally applies in engineering fields. However, there are many non-traditional data forms which can be captured using measurement systems, due in part to the growth of data science, a field which often leverages complex data structures.  
 
 The field of data science often leverages complex data structures. Data science deals in "pipelines" that begin with complex data structures apply sequential actions such as data processing and data transformation to the data to extract useful information and achieve some quantitative result \citep{DonohoDS}. In many applications, the pipeline involves data captured using a measurement system, and there is measurement uncertainty associated with the resulting data.  
 
@@ -220,7 +222,7 @@ similarity_dists <- similarity_data %>%
 ```
 
 
-```{r pipeline-summary, echo = F, warning = F, message = F, fig.cap = "Process of automated firearms comparison as proposed by \\cite{Hare1}. There are two stages of measurement within the full process. First, 3D microscopy is used to capture a three-dimensional surface topography of a bullet LEA and automated data processing techniques are used to remove bordering GEA data as well as bullet curvature. The result is a two-dimensional LEA signature. The second process involves pairing and aligning two data objects, extracting pairwise features, and calculating a pairwise similarity metric.", out.width = '\\textwidth'}
+```{r pipeline-summary, echo = F, warning = F, message = F, fig.cap = "Process of automated firearms comparison as proposed by \\cite{Hare1}. There are two stages of measurement within the full process. First, 3D microscopy is used to capture a three-dimensional surface topography of a bullet LEA. Automated data processing techniques are used to remove bordering GEA data as well as bullet curvature. The result is a two-dimensional LEA signature. The second process involves pairing and aligning two data objects, extracting pairwise features, and calculating a pairwise similarity metric. \\hh{Could you remove the text from 2D crosscut? It looks like little minus symbols - that confused me. Also, purely aesthetically - could you vertically center the very last box? :)}", out.width = '\\textwidth'}
 knitr::include_graphics("images/pipeline-summary/pipeline-summary.001.jpg")
 ```
 
@@ -228,30 +230,31 @@ knitr::include_graphics("images/pipeline-summary/pipeline-summary.001.jpg")
 
 We consider the application of data science to automated forensic firearms comparison. When a bullet is fired through a gun barrel, imperfections on lands inside the barrel engrave striation patterns on the bullet's surface  in alternating sections called land engraved areas (LEAs). Striation patterns, which visually appear as a series of peaks and valleys, are the primary evidence used to answer the forensic question of interest: whether two bullets originated from the same source or different sources.  
 
-In recent years, researchers have proposed several approaches to automating the comparison of bullet striation patterns using surface topographies of bullet LEAs captured using high-resolution microscopes (\cite{DeKinder2}, \cite{Chu1}, \cite{Chu2}, \cite{Hare1}). An overview of the comparison process proposed by \cite{Hare1} is shown in \autoref{fig:pipeline-summary}.  
+In recent years, researchers have proposed several approaches to automating the comparison of bullet striation patterns using surface topographies of bullet LEAs captured using high-resolution microscopes (\cite{DeKinder2}, \cite{Chu1}, \cite{Chu2}, \cite{Hare1}). \autoref{fig:pipeline-summary} shows an overview of the comparison process proposed by \cite{Hare1}.  
 
-Automated bullet comparison uses a data science approach to translate the complex striation pattern on bullet LEAs into measured data and subsequently calculate similarity metrics for any two bullet LEA striation patterns. Two LEA patterns originating from the same source (the same land in the same barrel) should have a high measure of similarity, while two LEA patterns originating from different sources should receive a low measure of similarity.  
+Automated bullet comparison uses a data science approach to translate the complex striation pattern on bullet LEAs into measured data and subsequently calculate similarity metrics for any two bullet LEA striation patterns. Two LEA patterns originating from the same source (the same land in the same barrel) should have a high similarity \hh{score}, while two LEA patterns  from different sources should receive a low similarity \hh{score}.  
 
 The data pipeline developed by \cite{Hare1} relies on the high-resolution microscopy measurement system. It is essential to establish the repeatability and reproducibility of the data capture and successive similarity analysis. However, the complex nature of striation patterns does not naturally lend itself to the traditional Gauge R\&R framework for univariate measurement data.  
 
 This paper presents two adaptations to the Gauge R\&R framework as they apply to two distinct data structures within the data science pipeline of forensic firearms analysis. We use automated analysis methods as a motivating example for the two approaches described hence. 
 
-The structure of this paper is as follows: we first describe the general three-factor Gauge R\&R model and assumptions, then describe two forensic firearms analysis data structures in detail and propose meaningful adaptations to the Gauge R\&R framework to best leverage repeated measurement data. We then describe the scope of data collected in our study, present results from both model frameworks, and discuss the implications of our work.  
+\hh{XXX include references to each section with ref and label.}
+The structure of this paper is as follows: we first \hh{present} the general three-factor Gauge R\&R model and \hh{its} assumptions, then describe two forensic firearms analysis data structures in detail and propose meaningful adaptations to the Gauge R\&R framework to best leverage repeated measurement data. We then \hh{outline} the scope of data collected in our study, \hh{show} results from both model frameworks, and discuss the implications of our work.  
 
 
 # Methodology  
 
 
-The traditional three-factor gauge R\&R model is defined as follows. For parts $p_j: j = 1, \dots, n_{p}$, operators $o_k: o = 1, \dots, n_{o}$, devices $d_m: m = 1, \dots, n_{d}$, and repetitions $r_n: n = 1, \dots, n_{r}$, let $y_{jkmn}$ be the measured response value for part $j$, operator $k$, device $m$, and repetition $n$. Define a mixed-effects model, 
+The traditional three-factor gauge R\&R model is defined as follows: for parts $p_j: j = 1, \dots, n_{p}$, operators $o_k: o = 1, \dots, n_{o}$, devices $d_m: m = 1, \dots, n_{d}$, and repetitions $r_n: n = 1, \dots, n_{r}$, let $y_{jkmn}$ be the measured response value for part $j$, operator $k$, device $m$, and repetition $n$. Define a mixed-effects model, 
 
 \begin{equation}
 y_{jkmn} = \mu + p_{j} + o_{k} + d_{m} + po_{jk} + pd_{jm} + od_{km} + pod_{jkm} + \epsilon_{jkmn}, \label{model1}
 \end{equation}
 
-where $\mu$ is a fixed, unknown measurement mean and all other model components are random effects \citep{Montgomery}. Assume each $p_j$, $o_k$, $d_m$, $po_{jk}$, $pd_{jm}$, $od_{km}$, and $pod_{jkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero, but with respective different variances; for example, $p_j \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. We also assume $\epsilon_{jkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
+where $\mu$ is a fixed, unknown measurement mean and all other model components are random effects \citep{Montgomery}. Assume \hh{all effects}  $p_j$, $o_k$, $d_m$, $po_{jk}$, $pd_{jm}$, $od_{km}$, and $pod_{jkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero but \hh{have}  different variances. \hh{To clarify the connection, we index a variance by its corresponding random variable}; for example, $p_j \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. We also assume $\epsilon_{jkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
 
-The model estimates of primary importance in measurement systems analysis are the variance components associated with each random effect. For example, the estimated value of $\sigma^2_d$, $\hat{\sigma}^2_d$, estimates the variance in the measurement process associated with differences across measurement devices. In addition, we consider two summary values:  
-
+Of primary importance in measurement systems analysis are the estimates of variance components associated with each random effect. For example, the estimated value of $\sigma^2_d$, $\hat{\sigma}^2_d$, estimates the variance in the measurement process associated with differences across measurement devices. We \hh{also} consider two summary values:  \hh{XXX I don't much like the long subscripts of repeatability and reproducibility. At a minimum they should be inencapsulated in the command text. Are you actually using these sigmas? if not, just write it out as actual text (keep the equation and the numbers): repeatability is reflected by: XXX reproducibility is reflected by: YYY}
+%
 \begin{align}
 \sigma_{repeatability} & = \sqrt{\sigma^2}\quad \mbox{and} \\
 \sigma_{reproducibility} & = \sqrt{\sigma^2_o + \sigma^2_d + \sigma^2_{po} + \sigma^2_{pd} + \sigma^2_{od} + \sigma^2_{pod}}. \label{sigmas}
@@ -259,13 +262,16 @@ The model estimates of primary importance in measurement systems analysis are th
 
 $\sigma_{repeatability}$ estimates variability of measurements taken under the same environmental conditions, while $\sigma_{reproducibility}$ estimates variability of measurements across differing environmental conditions.  
 
-To adapt this traditional three-factor model to our firearms analysis data pipeline, we must carefully consider the structure of our data.  
+To adapt this traditional three-factor model to our firearms analysis data pipeline, we must carefully consider the structure of our data.  \hh{XXX this sentence leaves me hanging. Give an indication on how you are going to do that. If you mean that this is done in the next paragraphs, put a colon, or end the sentence with 'as discussed in detail below'.}
 
-Automated forensic firearms analysis utilizes data to answer the forensic question of whether two bullets were fired through the same gun barrel. Determination of same-source or different-source origin for any two bullets is achieved by measuring the degree of similarity between the two objects. Within the automated analysis pipeline, this is achieved with two stages of measurement, both depicted in \autoref{fig:pipeline-summary}. The first measurement process involves capturing the surface topography of bullet LEAs and extracting a two-dimensional "signature" which represents the striation patterns engraved by the gun barrel. The second measurement process deals with pairs of signatures by extracting pairwise features and subsequently calculating a pairwise similarity metric. Both measurement processes result in data structures which are too complex for the scope of the traditional Gauge R\&R model defined in Equation \ref{model1}.  
+Automated forensic firearms analysis utilizes data to answer the forensic question of whether two bullets were fired through the same gun barrel. \hh{We distinguish between} same-source or different-source origin for any two bullets by measuring the degree of similarity between \hh{them}. Within the automated analysis pipeline, this is achieved with two stages of measurement. Both \hh{are} depicted in \autoref{fig:pipeline-summary}. The first measurement process involves capturing the surface topography of bullet LEAs and extracting a two-dimensional "signature" capturing the striation patterns engraved by the gun barrel. The second measurement process deals with pairs of signatures by extracting pairwise features and subsequently calculating a pairwise similarity metric. Both measurement processes result in data structures too complex for the scope of the traditional Gauge R\&R model defined in Equation \ref{model1}.  
   
-Measurement process 1 translates a physical object -- the surface of a bullet LEA -- to a complex data structure. Trained microscope operators stage bullets under high-resolution microscopes to capture a set of relative height values for a grid of equidistant $(x,y)$ locations. The result is an x3p (XML 3-D Surface Profile) file which contains a matrix of height measurements $\mathbf{Z} = z_{i,q}$ where $i = 1, \dots, n_x$ and $q = 1, \dots, n_y$. The pattern of interest on the bullet surface is the striation pattern, a series of peaks and valleys corresponding to scratches engraved by gun barrel imperfections.  
+Measurement process 1 translates a physical object -- the surface of a bullet LEA -- to a complex data structure. Trained microscope operators stage bullets \hh{in} high-resolution microscopes to capture \hh{relative height values on} a \hh{regular} grid. The result is an x3p (XML 3-D Surface Profile) file that contains a matrix of height measurements $\mathbf{Z} = z_{i,q}$ where $i = 1, \dots, n_x$ and $q = 1, \dots, n_y$. The pattern of interest on the bullet surface is the striation pattern, a series of peaks and valleys corresponding to scratches engraved by micro-imperfections in the gun barrel.  
 
-We extract the striation pattern using the two-step procedure proposed in \cite{Hare1}, shown in \autoref{fig:pipeline-summary}. First, we identify an optimal cross-section height, $y_{opt}$, and extracting ten consecutive rows of height measurements corresponding to the $y_q$ indices $q = (opt-4, \dots, opt+5)$. The resulting height measurement following the first step is the averaged measurement $z$ across ten rows by $x$ location $i$, $\bar{z}_{i\cdot}$. Second, we remove extraneous data on the edges originating from neighboring groove engraved areas (GEAs), and model and remove bullet curvature, resulting in a LEA "signature" capturing the striation pattern of peaks and valleys as deviations from global bullet structure. For additional details on signature extraction, see \cite{Hare1}.   
+We extract the striation pattern using the two-step procedure proposed in \cite{Hare1}, shown in \autoref{fig:pipeline-summary}. First, we identify an optimal cross-section height, $y_{opt}$, and 
+\hh{calculate a bullet profile by aggregating height measurements along a small band (marked in light red) across the bullet surface.} \hh{The resulting height measurement is denoted as  $\bar{z}_{i\cdot}$ for each location $i$ along $x$.}
+<!--extracting \hh{a band of} consecutive rows of height measurements corresponding to the $y_q$ indices $q = (opt-4, \dots, opt+5)$. The resulting height measurement following the first step is the averaged measurement $z$ across ten rows by $x$ location $i$, $\bar{z}_{i\cdot}$.-->
+We \hh{then} remove extraneous  \hh{extraneous doesn't sound right XXX} data on the edges originating from neighboring groove engraved areas (GEAs), and model and remove bullet curvature, resulting in a LEA "signature" capturing the striation pattern of peaks and valleys as deviations from global bullet structure. For additional details on signature extraction, see \cite{Hare1}.   \hh{XXX cite your own paper here :)}
 
 ```{r sig-structure, echo = F, warning = F, message = F, fig.cap = "\\label{sig-structure}Two-dimensional signature data utilized in automated forensic firearms analysis. The data structure, emphasized in green for every $10^{th}$ data point in one single signature, consists of equidistant $x_i$ locations with corresponding relative height values $z_i$. Most signatures contain several missing $z_i$ values, which are recorded as 'NA'. Repeated signature captures gathered for land engraved areas originating from the same gun are shown in grey.", fig.width = 8, fig.height = 4}
 sigs_aligned <- readRDS("data/orange_aligned_sigs_land2.rda")
@@ -492,9 +498,10 @@ z_{(L)(j)(k)(m)(n)} & = \mu_{(L)} + p_{(L)(j)} + o_{(L)(k)} + d_{(L)(m)} + po_{(
 
 We next describe the scope of data collected, present results from modeling both LEA signature data and pairwise similarity scores, and discuss conclusions reached from adapting the modeling framework.  
 
-# Data Collected  
+# Data Collect\hh{ion}
 
 The data collected for this study were x3p (XML 3-D Surface Profile) data objects capturing the surface topography of bullet LEAs. The resulting data structures, as described previously, are two-dimensional LEA signatures resulting from data processing during Measurement Process 1, and pairwise similarity scores for pairs of LEA signatures resulting from Measurement Process 2. We next describe the scale of the study and environmental conditions.  
+\hh{XXX Study design is the only subsection. You are also mentioning environmental conditions - should that be another subsection? If not, I'd suggest to get rid of the study design header. The section is short enough that it doesn't need that additional structure.}
 
 ## Study design  
 
