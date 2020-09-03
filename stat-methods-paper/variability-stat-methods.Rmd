@@ -29,7 +29,7 @@ library(lme4)
 
 \tableofcontents
 
-# Introduction 
+# Introduction \label{introduction}  
 
 Gauge Repeatability and Reproducibility (Gauge R\&R) studies are traditionally used in engineering fields as part of measurement systems analysis. Gauge R\&R studies focus on measuring the repeatability and reproducibility of a measurement process within and across environmental conditions \citep{Vardeman}. Their study design assumes a univariate measurement value resulting from some measurement process and aims to quantify sources of variability around a single measurement average.  
 
@@ -43,7 +43,7 @@ There are several useful applications of variance components obtained from a Gau
 
 The length of the screw in our example is a univariate response measurement. Quantifying the similarity of two objects and accounting for measurement variability is more challenging when working with complex data structures.  
 
-## Complex Data Structures  
+## Complex Data Structures \label{complex-data-structures}  
 
 The birth of data science and significant improvements in computing power have opened up new avenues in measurement systems analysis. Data collection and analyses are much quicker and easier today than ever before. Measurement systems can collect data in greater detail, often taking on complex forms with unique structures.  
 
@@ -143,9 +143,9 @@ profile_annotated <- process_scan$ccdata[[1]] %>%
            ymin=0, ymax=max_val, alpha=0.4, fill="darkred") +
   annotate("rect", xmin = process_scan$grooves[[1]]$groove[2], xmax = max_x,
            ymin = 0, ymax = max_val, alpha = 0.4, fill = "darkred") + 
-  geom_text(aes(x = 100, y = 100, label = "GEA")) + 
-  geom_text(aes(x = 2250, y = 100, label = "GEA")) + 
-  geom_text(aes(x = 1150, y = 100, label = "LEA")) + 
+  #geom_text(aes(x = 100, y = 100, label = "GEA")) + 
+  #geom_text(aes(x = 2250, y = 100, label = "GEA")) + 
+  #geom_text(aes(x = 1150, y = 100, label = "LEA")) + 
   geom_line(aes(x = x, y = value_std), lwd = 1.3) + 
   theme_bw() + 
   theme(axis.title = element_blank()) + 
@@ -154,7 +154,7 @@ profile_annotated <- process_scan$ccdata[[1]] %>%
             lwd = 1.1, alpha = 0.8)#+ 
   #labs(x = expression(paste("Relative Location x"[i], " (", mu, "m)")), 
   #     y =  expression(paste("Relative Height z"[i], " (", mu, "m)")))
-  
+  ## saved at 1225 by 450
 
 profile_zoomed <- process_scan$ccdata[[1]] %>%
   filter(between(x, 750, 850)) %>% 
@@ -222,27 +222,27 @@ similarity_dists <- similarity_data %>%
 ```
 
 
-```{r pipeline-summary, echo = F, warning = F, message = F, fig.cap = "Process of automated firearms comparison as proposed by \\cite{Hare1}. There are two stages of measurement within the full process. First, 3D microscopy is used to capture a three-dimensional surface topography of a bullet LEA. Automated data processing techniques are used to remove bordering GEA data as well as bullet curvature. The result is a two-dimensional LEA signature. The second process involves pairing and aligning two data objects, extracting pairwise features, and calculating a pairwise similarity metric. \\hh{Could you remove the text from 2D crosscut? It looks like little minus symbols - that confused me. Also, purely aesthetically - could you vertically center the very last box? :)}", out.width = '\\textwidth'}
+```{r pipeline-summary, echo = F, warning = F, message = F, fig.cap = "Process of automated firearms comparison as proposed by \\cite{Hare1}. There are two stages of measurement within the full process. First, 3D microscopy is used to capture a three-dimensional surface topography of a bullet LEA. Automated data processing techniques are used to remove bordering GEA data as well as bullet curvature. The result is a two-dimensional LEA signature. The second process involves pairing and aligning two data objects, extracting pairwise features, and calculating a pairwise similarity metric. \\hh{Could you remove the text from 2D crosscut? It looks like little minus symbols - that confused me. Also, purely aesthetically - could you vertically center the very last box? :)} \\kr{done!!}", out.width = '\\textwidth'}
 knitr::include_graphics("images/pipeline-summary/pipeline-summary.001.jpg")
 ```
 
-## Automated Forensic Firearms Analysis  
+## Automated Forensic Firearms Analysis \label{automated-forensic-firearms-analysis}  
 
 We consider the application of data science to automated forensic firearms comparison. When a bullet is fired through a gun barrel, imperfections on lands inside the barrel engrave striation patterns on the bullet's surface  in alternating sections called land engraved areas (LEAs). Striation patterns, which visually appear as a series of peaks and valleys, are the primary evidence used to answer the forensic question of interest: whether two bullets originated from the same source or different sources.  
 
 In recent years, researchers have proposed several approaches to automating the comparison of bullet striation patterns using surface topographies of bullet LEAs captured using high-resolution microscopes (\cite{DeKinder2}, \cite{Chu1}, \cite{Chu2}, \cite{Hare1}). \autoref{fig:pipeline-summary} shows an overview of the comparison process proposed by \cite{Hare1}.  
 
-Automated bullet comparison uses a data science approach to translate the complex striation pattern on bullet LEAs into measured data and subsequently calculate similarity metrics for any two bullet LEA striation patterns. Two LEA patterns originating from the same source (the same land in the same barrel) should have a high similarity \hh{score}, while two LEA patterns  from different sources should receive a low similarity \hh{score}.  
+Automated bullet comparison uses a data science approach to translate the complex striation pattern on bullet LEAs into measured data and subsequently calculate similarity metrics for any two bullet LEA striation patterns. Two LEA patterns originating from the same source (the same land in the same barrel) should have a high similarity score, while two LEA patterns  from different sources should receive a low similarity score.  
 
 The data pipeline developed by \cite{Hare1} relies on the high-resolution microscopy measurement system. It is essential to establish the repeatability and reproducibility of the data capture and successive similarity analysis. However, the complex nature of striation patterns does not naturally lend itself to the traditional Gauge R\&R framework for univariate measurement data.  
 
 This paper presents two adaptations to the Gauge R\&R framework as they apply to two distinct data structures within the data science pipeline of forensic firearms analysis. We use automated analysis methods as a motivating example for the two approaches described hence. 
 
-\hh{XXX include references to each section with ref and label.}
-The structure of this paper is as follows: we first \hh{present} the general three-factor Gauge R\&R model and \hh{its} assumptions, then describe two forensic firearms analysis data structures in detail and propose meaningful adaptations to the Gauge R\&R framework to best leverage repeated measurement data. We then \hh{outline} the scope of data collected in our study, \hh{show} results from both model frameworks, and discuss the implications of our work.  
+\hh{XXX include references to each section with ref and label.} \kr{done, see below}
+The structure of this paper is as follows: we first present the general three-factor Gauge R\&R model and its assumptions \kr{in Section \ref{methodology}}, then describe two forensic firearms analysis data structures in detail and propose meaningful adaptations to the Gauge R\&R framework to best leverage repeated measurement data \kr{(Sections \ref{reframing-sig-data}, \ref{reframing-similarity-scores})}. We then outline the scope of data collected in our study \kr{(Section \ref{data-collection})}, show results from both model frameworks \kr{(Section \ref{results})}, and discuss the implications of our work \kr{(Section \ref{conclusions})}.  
 
 
-# Methodology  
+# Methodology \label{methodology}  
 
 \hh{I was tripped up by this in your defense, and I am again being tripped up in the paper by having the traditional model explained first and then changed later. I believe I have figured out why - I've explained it in section 2.1}
 
@@ -252,29 +252,29 @@ The traditional three-factor gauge R\&R model is defined as follows: for parts $
 y_{jkmn} = \mu + p_{j} + o_{k} + d_{m} + po_{jk} + pd_{jm} + od_{km} + pod_{jkm} + \epsilon_{jkmn}, \label{model1}
 \end{equation}
 
-where $\mu$ is a fixed, unknown measurement mean and all other model components are random effects \citep{Montgomery}. Assume \hh{all effects}  $p_j$, $o_k$, $d_m$, $po_{jk}$, $pd_{jm}$, $od_{km}$, and $pod_{jkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero but \hh{have}  different variances. \hh{To clarify the connection between an effect and its variance, we index a variance by its corresponding effect}; for example, $p_j \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. We also assume $\epsilon_{jkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
+where $\mu$ is a fixed, unknown measurement mean and all other model components are random effects \citep{Montgomery}. Assume all effects $p_j$, $o_k$, $d_m$, $po_{jk}$, $pd_{jm}$, $od_{km}$, and $pod_{jkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero but have different variances. To clarify the connection between an effect and its variance, we index a variance by its corresponding effect; for example, $p_j \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. We also assume $\epsilon_{jkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
 
-Of primary importance in measurement systems analysis are the estimates of variance components associated with each random effect. For example, the estimated value of $\sigma^2_d$, $\hat{\sigma}^2_d$, estimates the variance in the measurement process associated with differences across measurement devices. We \hh{also} consider two summary values:  \hh{XXX I don't much like the long subscripts of repeatability and reproducibility. At a minimum they should be encapsulated in the command 'text'. Are you actually using these sigmas? if not, just write it out as actual text (keep the equation and the numbers): repeatability is reflected by: XXX reproducibility is reflected by: YYY}
+Of primary importance in measurement systems analysis are the estimates of variance components associated with each random effect. For example, the estimated value of $\sigma^2_d$, $\hat{\sigma}^2_d$, estimates the variance in the measurement process associated with differences across measurement devices. We also consider two summary values:  \hh{XXX I don't much like the long subscripts of repeatability and reproducibility. At a minimum they should be encapsulated in the command 'text'. Are you actually using these sigmas? if not, just write it out as actual text (keep the equation and the numbers): repeatability is reflected by: XXX reproducibility is reflected by: YYY} \kr{We report these sigams in a table at the end, but how about shortening to "repeat" and "reprod" as text, as below? can update table too if we like this.}
 %
 \begin{align}
-\sigma_{repeatability} & = \sqrt{\sigma^2}\quad \mbox{and} \\
-\sigma_{reproducibility} & = \sqrt{\sigma^2_o + \sigma^2_d + \sigma^2_{po} + \sigma^2_{pd} + \sigma^2_{od} + \sigma^2_{pod}}. \label{sigmas}
+\sigma_{\mbox{repeat}} & = \sqrt{\sigma^2}\quad \mbox{and} \\
+\sigma_{\mbox{reprod}} & = \sqrt{\sigma^2_o + \sigma^2_d + \sigma^2_{po} + \sigma^2_{pd} + \sigma^2_{od} + \sigma^2_{pod}}. \label{sigmas}
 \end{align}
 
-$\sigma_{repeatability}$ estimates variability of measurements taken under the same environmental conditions, while $\sigma_{reproducibility}$ estimates variability of measurements across differing environmental conditions.  
+$\sigma_{\mbox{repeat}}$ estimates variability of measurements taken under the same environmental conditions, while $\sigma_{\mbox{reprod}}$ estimates variability of measurements across differing environmental conditions.  
 
-To adapt this traditional three-factor model to our firearms analysis data pipeline, we must carefully consider the structure of our data.  \hh{XXX this sentence leaves me hanging. Give an indication on how you are going to do that. If you mean that this is done in the next paragraphs, put a colon, or end the sentence with 'as discussed in detail below'.} \hh{XXX I can now also see how the model above is actually different from the model below, but I overlooked it when  not looking for it specifically. It needs more emphasis.}
+To adapt this traditional three-factor model to our firearms analysis data pipeline, we must carefully consider the structure of our data. \kr{We discuss the structure of our data and ensuing adaptations in detail below.} \hh{XXX this sentence leaves me hanging. Give an indication on how you are going to do that. If you mean that this is done in the next paragraphs, put a colon, or end the sentence with 'as discussed in detail below'.} \hh{XXX I can now also see how the model above is actually different from the model below, but I overlooked it when  not looking for it specifically. It needs more emphasis.}
 
-Automated forensic firearms analysis utilizes data to answer the forensic question of whether two bullets were fired through the same gun barrel. \hh{We distinguish between} same-source or different-source origin for any two bullets by measuring the degree of similarity between \hh{them}. Within the automated analysis pipeline, this is achieved with two stages of measurement. Both \hh{are} depicted in \autoref{fig:pipeline-summary}. The first measurement process involves capturing the surface topography of bullet LEAs and extracting a two-dimensional "signature" capturing the striation patterns engraved by the gun barrel. The second measurement process deals with pairs of signatures by extracting pairwise features and subsequently calculating a pairwise similarity metric. Both measurement processes result in data structures too complex for the scope of the traditional Gauge R\&R model defined in Equation \ref{model1}.  
+Automated forensic firearms analysis utilizes data to answer the forensic question of whether two bullets were fired through the same gun barrel. We distinguish between same-source or different-source origin for any two bullets by measuring the degree of similarity between them. Within the automated analysis pipeline, this is achieved with two stages of measurement. Both are depicted in \autoref{fig:pipeline-summary}. The first measurement process involves capturing the surface topography of bullet LEAs and extracting a two-dimensional "signature" capturing the striation patterns engraved by the gun barrel. The second measurement process deals with pairs of signatures by extracting pairwise features and subsequently calculating a pairwise similarity metric. Both measurement processes result in data structures too complex for the scope of the traditional Gauge R\&R model defined in Equation \ref{model1}.  
   
-Measurement process 1 translates a physical object -- the surface of a bullet LEA -- to a complex data structure. Trained microscope operators stage bullets \hh{in} high-resolution microscopes to capture \hh{relative height values on} a \hh{regular} grid. The result is an x3p (XML 3-D Surface Profile) file that contains a matrix of height measurements $\mathbf{Z} = z_{i,q}$ where $i = 1, \dots, n_x$ and $q = 1, \dots, n_y$. The pattern of interest on the bullet surface is the striation pattern, a series of peaks and valleys corresponding to scratches engraved by micro-imperfections in the gun barrel.  
+Measurement process 1 translates a physical object -- the surface of a bullet LEA -- to a complex data structure. Trained microscope operators stage bullets in high-resolution microscopes to capture relative height values on a regular grid. The result is an x3p (XML 3-D Surface Profile) file that contains a matrix of height measurements $\mathbf{Z} = z_{i,q}$ where $i = 1, \dots, n_x$ and $q = 1, \dots, n_y$. The pattern of interest on the bullet surface is the striation pattern, a series of peaks and valleys corresponding to scratches engraved by micro-imperfections in the gun barrel.  
 
 We extract the striation pattern using the two-step procedure proposed in \cite{Hare1}, shown in \autoref{fig:pipeline-summary}. First, we identify an optimal cross-section height, $y_{opt}$, and 
-\hh{calculate a bullet profile by aggregating height measurements along a small band (marked in light red) across the bullet surface.} \hh{The resulting height measurement is denoted as  $\bar{z}_{i\cdot}$ for each location $i$ along $x$.}
+calculate a bullet profile by aggregating height measurements along a small band (marked in light red) across the bullet surface. The resulting height measurement is denoted as  $\bar{z}_{i\cdot}$ for each location $i$ along $x$.
 <!--extracting \hh{a band of} consecutive rows of height measurements corresponding to the $y_q$ indices $q = (opt-4, \dots, opt+5)$. The resulting height measurement following the first step is the averaged measurement $z$ across ten rows by $x$ location $i$, $\bar{z}_{i\cdot}$.-->
-\hh{To counter effects from the structurally different neighboring groove engraved areas (GEAs)} we remove  data \hh{from these region}, model and remove bullet curvature. \hh{This process} results in a LEA "signature" capturing the striation pattern of peaks and valleys as deviations from global bullet structure. For additional details on signature extraction, see \cite{Hare1}.   \hh{XXX cite your own paper here as well :)}
+To counter effects from the structurally different neighboring groove engraved areas (GEAs) we remove  data from these regions, model and remove bullet curvature. This process results in a LEA "signature" capturing the striation pattern of peaks and valleys as deviations from global bullet structure. For additional details on signature extraction, see \cite{Hare1} \kr{and \cite{RiceJFS}}.   \hh{XXX cite your own paper here as well :)} 
 
-```{r sig-structure, echo = F, warning = F, message = F, fig.cap = "\\label{sig-structure}Two-dimensional signature data utilized in automated forensic firearms analysis. \\hh{A total of 230 signatures corresponding to scans of land 2 in barrel 6 of the Hamby set 224 are shown. One of the signatures is emphasized as green line, every $10^{th}$ data point is drawn. } The data structure consists of equidistant $x_i$ locations with corresponding relative height values $z_i$. Most signatures contain several missing $z_i$ values.", fig.width = 8, fig.height = 4}
+```{r sig-structure, echo = F, warning = F, message = F, fig.cap = "\\label{sig-structure}Two-dimensional signature data utilized in automated forensic firearms analysis. A total of 228 signatures corresponding to scans of land 2 in barrel 6 of the Hamby set 224 are shown. One of the signatures is emphasized as green line, every $10^{th}$ data point is drawn. The data structure consists of equidistant $x_i$ locations with corresponding relative height values $z_i$. Most signatures contain several missing $z_i$ values.", fig.width = 8, fig.height = 4}
 sigs_aligned <- readRDS("data/orange_aligned_sigs_land2.rda")
 
 single_sig <- sigs_aligned %>%
@@ -312,20 +312,30 @@ sigs_aligned %>%
 ```
 
 
-The resulting LEA signatures are a \hh{sequence} of residual values $e_i = \hat{z}_{i\cdot} - \bar{z}_{i\cdot}$, \hh{XXX usually residuals are defined as observed minus expected. I don't think it matters, but it should be fixed.} where $\hat{z}_{i\cdot}$ are predicted height values for location $x_i$ from a LOESS model fit to the bullet curvature. 
-The series of relative height measurements and their corresponding locations $x_i$ are the structure of interest, so for clarity we will denote LEA signatures as a set of measurements $(x_i, z_i)$ \hh{XXX I'm not sure you mean $z_i$. But I'd be in favor of renaming the $\bar{z}_{i\cdot}$ to $z_i$.}, $i = 1, \dots, \ell$ where $\ell$ is the number of $x$ locations on a signature \hh{for LEA} $L$. \autoref{sig-structure} depicts \hh{231 signatures corresponding to csans from three bullets  of barrel 6 in Hamby set 224. Scans were taken by multiple operators on two different microscopes.} These repetitions are shown in grey, and demonstrate the variability within the measurement process of translating striation patterns on bullets to signature data objects. \hh{One of these signature is singled out and shown  in darkgreen to emphasize the general structure.}
-\hh{XXX It looks like the  signatures are also zero-centered. That needs mentioning}
+The resulting LEA signatures are a sequence of residual values \kr{$e_i = \bar{z}_{i\cdot} - \hat{z}_{i\cdot}$}, \hh{XXX usually residuals are defined as observed minus expected. I don't think it matters, but it should be fixed.} where $\hat{z}_{i\cdot}$ are predicted height values for location $x_i$ from a LOESS model fit to the bullet curvature. 
+The series of relative height measurements and their corresponding locations $x_i$ are the structure of interest, so for clarity we will denote LEA signatures as a set of measurements $(x_i, z_i)$, \kr{replacing $\bar{z}_{i\cdot}$ with simply $z_i$ - is this better?}.\hh{XXX I'm not sure you mean $z_i$. But I'd be in favor of renaming the $\bar{z}_{i\cdot}$ to $z_i$.}, $i = 1, \dots, \ell$ where $\ell$ is the number of $x$ locations on a signature for LEA $L$. \autoref{sig-structure} depicts 228 signatures corresponding to scans from three bullets  of barrel 6 in Hamby set 224. Scans were taken by multiple operators on two different microscopes. These repetitions are shown in grey, and demonstrate the variability within the measurement process of translating striation patterns on bullets to signature data objects. One of these signature is singled out and shown in dark green to emphasize the general structure. 
+\hh{XXX It looks like the  signatures are also zero-centered. That needs mentioning} \kr{The signatures depicted in \autoref{sig-structure} have been coaligned in the $x$ direction using maximum cross-correlation function. In addition, trailing edges of each signature were trimmed to balance $x$ location indices for modeling. XXX something like this? I don't believe these are zero centered, these are just signatures as-is.}  
 \hh{XXX how about: Height measurements from the microscope are set by the operator during the scanning process and are therefore relative. Even after removing the bullet curvature only the range of height measurements and their relative values compared to each other are meaningful, but not the actual values. Accordingly, we can zero center each signature. }
 
-Measurement process 2 deals with answering the forensic question: were two bullets fired from the same gun barrel? The forensic question is addressed at the LEA level. By comparing pairs of LEAs from two bullets we determine whether any of the LEA striation patterns match  based on a similarity metric which aims to separate  "matching" LEA pairs from  "non-matching" LEA pairs. In the data pipeline suggested by \citet{Hare1}  a set of pairwise features \hh{is extracted from aligned signatures}, such  as the  cross-correlation function, the number of consecutively matching striae, \hh{and the number of non-matching striae}. \hh{These features} provide information about the level of similarity between any two objects. This set of paired features \hh{is used in a random forest model trained in} \citet{Hare1} \hh{to predict a similarity score for each pair of signatures } with possible values in $[0,1]$. <!--For additional information regarding the pairwise features and resulting similarity score, see \cite{Hare1}.-->
+Measurement process 2 deals with answering the forensic question: were two bullets fired from the same gun barrel? The forensic question is addressed at the LEA level. By comparing pairs of LEAs from two bullets we determine whether any of the LEA striation patterns match  based on a similarity metric which aims to separate  "matching" LEA pairs from  "non-matching" LEA pairs. In the data pipeline suggested by \citet{Hare1}  a set of pairwise features is extracted from aligned signatures, such  as the  cross-correlation function, the number of consecutively matching striae, and the number of non-matching striae. These features provide information about the level of similarity between any two objects. This set of paired features is used in a random forest model trained in \citet{Hare1} to predict a similarity score for each pair of signatures with possible values in $[0,1]$. <!--For additional information regarding the pairwise features and resulting similarity score, see \cite{Hare1}.-->
 The pairwise nature of the comparisons introduces complexity to measurement analysis; modeling variability in relation to environmental conditions requires a redefinition of the framework traditionally used to consider environmental conditions in Gauge R\&R. 
 
 We next propose adaptations to the traditional Gauge R\&R framework that accommodate the complex data structures resulting from both Measurement Process 1 and 2: LEA signature data and the pairwise similarity score.  
   
 
-## Reframing Gauge R\&R for Signature Data
+## Reframing Gauge R\&R for Signature Data \label{reframing-sig-data}  
 
-The structure of LEA signature data introduces two primary obstacles to utilizing the traditional Gauge R\&R framework. First, the measured response is \hh{composed of a} set of structured measurements rather than a single \hh{value}. Secondly, the structure of peaks and valleys in LEA signatures violates an assumption of independence for measured response values. To address these incongruities, we \hh{have to make two modifications} to the traditional three-factor Gauge R\&R model. The first adaptation focuses on the model's fixed effect structure, while the second focuses on data reduction for compliance with independence assumptions.  
+The structure of LEA signature data introduces two primary obstacles to utilizing the traditional Gauge R\&R framework. First, the measured response is composed of a set of structured measurements rather than a single value. Secondly, the structure of peaks and valleys in LEA signatures violates an assumption of independence for measured response values. To address these incongruities, we have to make two modifications to the traditional three-factor Gauge R\&R model. The first adaptation focuses on the model's fixed effect structure, while the second focuses on data reduction for compliance with independence assumptions.  
+
+\kr{We define a model to estimate measurement variability of LEA signatures in the following way. Let $z_{Lijkmn}$ be the measured signature height value for land $L = 1, \dots, 6$ at location $x_i: i = 1, 2, \dots, \ell$, on part $j$, scanned by operator $k$, on device $m$, and at repetition $n$.  
+
+\begin{equation}
+z_{Lijkmn} = \mu_{Li} + p_{Lij} + o_{Lik} + d_{Lim} + po_{Lijk} + pd_{Lijm} + od_{Likm} + pod_{Lijkm} + \epsilon_{Lijkmn}, \label{sig-model}
+\end{equation}}
+
+where $\mu_{Li}$ is a fixed, unknown measurement average by location index $i$ on land $L$, and all other model components are random effects. Assume each $p_{Lij}$, $o_{Lik}$, $d_{Lim}$, $po_{Lijk}$, $pd_{Lijm}$, $od_{Likm}$, and $pod_{Lijkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero and have respective differing variances; for example, $p_{Lij} \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. Also assume $\epsilon_{Lijkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.}  
+
+\kr{Note that Equation \ref{sig-model} contains a more complex fixed effect structure than the traditional model defined in Equation \ref{model1}. We define a fixed effect $\mu_{Li}$ indexed by both land $L$ and location $i$ in order to separate structural variability in the signature from measurement variability, our mechanism of interest. LEA signature data contain an inherently complex structure of center, as signatures are made up of series of peaks and valleys which act as the signal of interest for evidence comparison. We are interested in measuring the variability around that signal measurement rather than variability of the signal itself, and therefore must account for differences in structural height by location as part of our fixed effects structure. XXX better?}
 
 ```{r fixed-effect, echo = F, warning = F, message = F, fig.cap = "\\label{fixed-effect}Two-dimensional signature data, centered by subtracting the mean \\hh{in each} location $x_i$. One exemplar \\hh{centered} signature is shown in green, with points emphasized at each $100^{th}$ $x_i$ location.", fig.width = 8, fig.height = 4}
 
@@ -371,12 +381,12 @@ sigs_centered %>%
 
 
 \hh{XXX re-reading ... I think my confusion was caused by going back to Equation 1 rather than defining the model for the re-framed R\&R here and then reflecting afterwards that equation 2 looks like equation 1.}
-The three-factor model defined in Equation \ref{model1} defines all effects as random save for a single fixed effect: a fixed,  measurement average, $\mu$. LEA signature data inherently contain a more complex structure of center, as signatures are not made up of a univariate response corresponding to a single measurement value. \hh{XXX Rather than motivating the location based means as mis-characterization of the variability, let's frame it as a separation of signal and variability: the fixed effects give us the structure of the signal that is being measured, i.e the mean signature of the barrel land as engraved on multiple bullets (which we are usually interested in during the comparison process). The variability around the mean is of interest now, because we can  characterize different sources of variability this way.} Failing to account for differences in structural height by location will result in mischaracterization of variance components within the model; variability estimates will include the object's structural variability rather than measurement variability. To address this, we define the model's fixed effect structure by location $x_i$ on each land $L$: $\mu_{Li}$. 
+\kr{XXX this will go away XXXThe three-factor model defined in Equation \ref{model1} defines all effects as random save for a single fixed effect: a fixed,  measurement average, $\mu$. LEA signature data inherently contain a more complex structure of center, as signatures are not made up of a univariate response corresponding to a single measurement value. \hh{XXX Rather than motivating the location based means as mis-characterization of the variability, let's frame it as a separation of signal and variability: the fixed effects give us the structure of the signal that is being measured, i.e the mean signature of the barrel land as engraved on multiple bullets (which we are usually interested in during the comparison process). The variability around the mean is of interest now, because we can  characterize different sources of variability this way.} Failing to account for differences in structural height by location will result in mischaracterization of variance components within the model; variability estimates will include the object's structural variability rather than measurement variability. To address this, we define the model's fixed effect structure by location $x_i$ on each land $L$: $\mu_{Li}$. }
 
 
 The practical implication of including a fixed effect by location in the model is demonstrated in \autoref{fixed-effect}. After centering signature height values by the mean height measurement from all repetitions at location $x_i$, remaining variability around the center is greatly reduced, and more adeptly captures measurement variability rather than structural variability.  
 
-Despite this adjustment, there is still significant structure remaining in the LEA signature data which may cloud estimation \hh{XXX 'cloud' is a bit vague. Be more specific. The structure you are referring to is autocorrelation and it leads to a systematic underestimation of the variance components when left in the model.} of quantities of interest, such as the variance components associated with operator and device. One approach to mitigating this misrepresentation is to carefully define the grouping structure used to estimate variance components. We consider, for example the variability of measurements across devices. It is of interest whether one device captures more extreme values, such as higher peak measurements and lower valley measurements. If we define a random effect for device and group by device along, without accounting for structural differences by location, extreme highs and extreme lows will average out across the entire group and the variability will be artificially deflated. We address this by defining our random effect groups by both study factor and location $Li$. This is accomplished by interacting location with study factor in a random effect.  
+Despite this adjustment, there is still significant structure remaining in the LEA signature data which may \kr{lead to systematic underestimation of quantities of interest when left in the model,} \hh{XXX 'cloud' is a bit vague. Be more specific. The structure you are referring to is autocorrelation and it leads to a systematic underestimation of the variance components when left in the model.} such as the variance components associated with operator and device. Our approach to mitigating this misrepresentation, as shown in Equation \ref{sig-model}, is to carefully define the grouping structure used to estimate variance components. \kr{We define random effect grouping structure by both study factor and location $Li$, practically accomplished by interacting location with study factor in each random effect}. \kr{Consider} for example the variability of measurements across devices. It is of interest whether one device captures more extreme values, such as higher peak measurements and lower valley measurements. If we defined a random effect for device and grouped by device alone, without accounting for structural differences by location, extreme highs and extreme lows would average out across the entire group and the variability would be artificially deflated. \kr{XXXThis will go away: We address this by defining our random effect groups by both study factor and location $Li$. This is accomplished by interacting location with study factor in a random effect.}  
 
 Adaptations to the fixed effect and grouping structure ensure that the estimated variance components associated with our model accurately represent quantities of interest. However, the independence assumption for response values is violated and needs to be addressed before a random effects model can be properly applied to the LEA signature data structure.  
 
@@ -461,14 +471,16 @@ sigs_acf %>%
 
 ```
 
-\hh{XXX Move the model equation up to the start of section 2.1. You don't have to be specific about the locations at that point. Once that you have addressed autocorrelation you can specify the location index in more detail.}
+\hh{XXX Move the model equation up to the start of section 2.1. You don't have to be specific about the locations at that point. Once that you have addressed autocorrelation you can specify the location index in more detail.} \kr{done!}
+
+\kr{The model is used as stated in Equation \ref{sig-model}, but using data at subsampled indices $x_i:i = 1, 101, \dots, 1+100*c$. XXX the rest of this can go away if we like the new framing:  
 The resulting model we use to estimate measurement variability of LEA signatures is then as follows. Let $z_{Lijkmn}$ be the measured signature height value for land $L = 1, \dots, 6$ at location $x_i:i = 1, 101, \dots, 1+100*c$, on part $j$, scanned by operator $k$, on device $m$, and at repetition $n$.  
 
 \begin{equation}
-z_{Lijkmn} = \mu_{Li} + p_{Lij} + o_{Lik} + d_{Lim} + po_{Lijk} + pd_{Lijm} + od_{Likm} + pod_{Lijkm} + \epsilon_{Lijkmn}, \label{sig-model}
+z_{Lijkmn} = \mu_{Li} + p_{Lij} + o_{Lik} + d_{Lim} + po_{Lijk} + pd_{Lijm} + od_{Likm} + pod_{Lijkm} + \epsilon_{Lijkmn}, \label{sig-model-old}
 \end{equation}
 
-where $\mu_{Li}$ is a fixed, unknown measurement average by location index $i$ on land $L$, and all other model components are random effects. Assume each $p_{Lij}$, $o_{Lik}$, $d_{Lim}$, $po_{Lijk}$, $pd_{Lijm}$, $od_{Likm}$, and $pod_{Lijkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero and have respective differing variances; for example, $p_{Lij} \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. Also assume $\epsilon_{Lijkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.  
+where $\mu_{Li}$ is a fixed, unknown measurement average by location index $i$ on land $L$, and all other model components are random effects. Assume each $p_{Lij}$, $o_{Lik}$, $d_{Lim}$, $po_{Lijk}$, $pd_{Lijm}$, $od_{Likm}$, and $pod_{Lijkm}$ are independent and identically distributed random variables which follow normal distributions centered at zero and have respective differing variances; for example, $p_{Lij} \stackrel{iid}{\sim} N(0, \sigma^2_{p})$. Also assume $\epsilon_{Lijkmn} \stackrel{iid}{\sim} N(0, \sigma^2)$.}
 
 One additional aspect to consider is the significant reduction in data caused by our subsampling scheme. To address this concern, we fit a series of phased models for each set of repeated signatures which use data subsampled using the same window size $w$, but whose starting index is staggered throughout the width of a single window. To fit ten phased models with a window size $w=100$, we stagger the starting index at each $10^{th}$ location: 
 
@@ -483,7 +495,7 @@ The phased approach incorporates a larger proportion of the original data points
 
 We next consider the second data format in the \cite{Hare1} data pipeline. 
 
-## Reframing Gauge R&R for Similarity Scores  
+## Reframing Gauge R&R for Similarity Scores \label{reframing-similarity-scores}  
 
 The structure of pairwise similarity scores presents an obstacle to the Gauge R\&R framework which differs from the LEA signatures. Similarity scores resulting from Measurement Process 2 are univariate, singular measurement values. They do not pose the challenge to independence that LEA signatures present. However, the levels of study factors parts, operators, and devices no longer have a one-to-one relationship with the levels of study factors represented in a single response measurement. In addition, a singular measurement average $\mu$ as the fixed effects structure (as in \autoref{model1}) does not fully capture the mean structure present.  
 
@@ -507,12 +519,10 @@ z_{(L)(j)(k)(m)(n)} & = \mu_{(L)} + p_{(L)(j)} + o_{(L)(k)} + d_{(L)(m)} + po_{(
 
 We next describe the scope of data collected, present results from modeling both LEA signature data and pairwise similarity scores, and discuss conclusions reached from adapting the modeling framework.  
 
-# Data Collect\hh{ion}
+# Data Collect\hh{ion} \label{data-collection}  
 
 The data collected for this study were x3p (XML 3-D Surface Profile) data objects capturing the surface topography of bullet LEAs. The resulting data structures, as described previously, are two-dimensional LEA signatures resulting from data processing during Measurement Process 1, and pairwise similarity scores for pairs of LEA signatures resulting from Measurement Process 2. We next describe the scale of the study and environmental conditions.  
-\hh{XXX Study design is the only subsection. You are also mentioning environmental conditions - should that be another subsection? If not, I'd suggest to get rid of the study design header. The section is short enough that it doesn't need that additional structure.}
-
-## Study design  
+\hh{XXX Study design is the only subsection. You are also mentioning environmental conditions - should that be another subsection? If not, I'd suggest to get rid of the study design header. The section is short enough that it doesn't need that additional structure.} \kr{done! we can talk more about environmental conditions, but it's less important for the focus of this paper.}
 
 Our Gauge R\&R study focused on varying three environmental conditions: parts, devices, and operators. In our study, parts are considered to be bullets of origin. We focus on three bullets originating from the same Ruger P-85 gun barrel. The bullets, which originate from Hamby set 224, were physically fired and collected as part of a large-scale study on accuracy of firearms examination conclusions \citep{Hamby}. Each bullet contains six LEAs, each engraved by contact with one of the six lands inside the same gun barrel.  
 
@@ -521,7 +531,7 @@ Each LEA was scanned on two devices by eight operators at least three times. Eac
 While the three bullets originate from the same barrel, pairwise comparisons are completed at the land-to-land level, resulting in a set of pairwise comparisons which represent a mix of same-source and different-source pairs. For example, each LEA on Bullet 1 only originates from the same source (here land) as one of the six LEAs on Bullet 2. All other comparisons are considered different-source pairs. The result is over 930,000 paired comparisons, with over 100,000 same-source comparisons and over 700,000 different-source comparisons.  
 
 
-# Results  
+# Results \label{results}      
 
 Within our collected data, there were several LEAs with surface damage. In forensic science practice, firearms examiners deem LEAs with damage unsuitable for comparison and they are removed from consideration. Under each model, we fit models which include all available data as well as a set of models which removed all signatures originating from damaged LEAs. Both sets of results are reported for both LEA signatures and pairwise scores.  
 
@@ -750,7 +760,7 @@ All Pairings     & 0.115 & 0.039\\
 
 
 
-# Conclusions  
+# Conclusions \label{conclusions}  
 
 Our approach to adapting the Gauge R\&R framework to two complex data structures was focused on preserving the model assumptions and structure of traditional Gauge R\&R mixed-effects models. Adapting data science problems which leverage complex data structures to fit the traditional Gauge R\&R framework has several advantages, the first of which is the preservation of the data format and units. Interpretability of estimated variance components is immediate and does not require any additional transformation or maneuvering.  
 
